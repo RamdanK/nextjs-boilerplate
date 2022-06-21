@@ -274,3 +274,25 @@ With that package installed we can update our `package.json` `dev` script to loo
 ```
 
 This will allow you to log server data in the browser while working in dev mode, making it easier to debug issues.
+
+## Directory Structure
+
+This section is now going to cover setting up the folder structure in our project. This is one of those topics that many people will have extremely strong opinions about, and for good reason! Directory structure can really make or break a project in the long term when it gets out of control, especially when fellow team members have to spend unnecessary time trying to guess where to put things (or find things).
+
+I personally like to take a fairly simplistic approach, keep things separated basically in a class model/view style. We will be using three primary folders:
+
+```
+/components
+/lib
+/pages
+```
+
+- `component` - The individual UI components that make up the app will live in here
+- `lib` - Business/app/domain logic will live in here.
+- `pages` - Will be the actual routes/pages as per the required Next.js
+
+We will have other folders in addition to this to support the project, but the core of almost everything that makes up the unique app that we are building will be housed in these three directories.
+
+Within components we will have subdirectories that kind of group similar types of components together. You can use any method you prefer to do this. I have used the MUI library quite a bit in my time, so I tend to follow the same organization they use for components in their documentation
+
+For example inputs, surfaces, navigation, utils, layout etc.
