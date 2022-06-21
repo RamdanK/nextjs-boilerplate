@@ -216,3 +216,61 @@ Within `settings.json` we will add the following values:
 The above will tell VS Code to use your Prettier extension as the default formatter (you can override manually if you wish with another one) and to automatically format your files and organize your import statements every time you save.
 
 Very handy stuff and just another thing you no longer need to think about so you can focus on the important things like solving business problems.
+
+## Debugging
+
+Let's set up a convenient environment for debugging our application in case we run into any issues during development.
+
+Inside of your `.vscode` directory, there is a `launch.json` file:
+
+```
+{
+  "version": "0.1.0",
+  "configurations": [
+    {
+      "name": "brixee-link-bio: debug server-side",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev"
+    },
+    {
+      "name": "brixee-link-bio: debug client-side",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:3000"
+    },
+    {
+      "name": "brixee-link-bio: debug full stack",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "serverReadyAction": {
+        "pattern": "started server on .+, url: (https?://.+)",
+        "uriFormat": "%s",
+        "action": "debugWithChrome"
+      }
+    }
+  ]
+}
+
+```
+
+With that script in place you have three choices for debugging. CLick the little "bug & play icon" on the left of VS Code or press Ctrl + Shift + D to access the debugging menu. You can select which script you want to run and start/stop it with the start/stop buttons.
+
+In addition to this, or if you are not using VS Code, we can also set up some helpful debugging scripts in your project.
+
+First we will install the [cross-env](https://www.npmjs.com/package/cross-env) which will; be necessary to set environment variables if you have teammates working on different environments (Windows, Linux, Mac, etc).
+
+With that package installed we can update our `package.json` `dev` script to look like the following:
+
+```
+{
+  ...
+  "scripts": {
+    ...
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
+  },
+}
+```
+
+This will allow you to log server data in the browser while working in dev mode, making it easier to debug issues.
