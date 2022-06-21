@@ -61,6 +61,7 @@ Note that the use of `engine-strict` didn't specifically say anything about `yar
 ```
 
 ## ESLint
+
 We'll begin with ESLint, which is easy because it automatically comes installed and pre-configured with Next.js projects.
 
 We are just going to add a little bit of extra configuration and make it a bit stricter than it is by default. If you disagree with any of the rules it sets, no need to worry, it's very easy to disable any of them manually. We configure everything in .eslintrc.json which should already exist in your root directory:
@@ -79,10 +80,12 @@ We are just going to add a little bit of extra configuration and make it a bit s
 }
 ```
 
-In the above small code example we have added a few additional defaults, we have said that React will always be defined even if we don't specifically import it, and I have added a personal custom rule that I like which allows you to prefix variables with an underscore _ if you have declared them but not used them in the code.
+In the above small code example we have added a few additional defaults, we have said that React will always be defined even if we don't specifically import it, and I have added a personal custom rule that I like which allows you to prefix variables with an underscore \_ if you have declared them but not used them in the code.
 
 I find that scenario comes up often when you are working on a feature and want to prepare variables for use later, but have not yet reached the point of implementing them.
+
 ## Prettier
+
 Prettier will take care of automatically formatting our files for us.
 
 I also recommend you get the Prettier [VS Code extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) so that VS Code can handle the formatting of the files for you and you don't need to rely on the command line tool. Having it installed and configured in your project means that VSCode will use your project's settings, so it's still necessary to add it here.
@@ -100,11 +103,12 @@ We'll create two files in the root:
 }
 ```
 
-In that file I've placed a list of directories that I don't want Prettier to waste any resources working on. You can also use patterns like *.html to ignore groups of types of files if you choose.
+In that file I've placed a list of directories that I don't want Prettier to waste any resources working on. You can also use patterns like \*.html to ignore groups of types of files if you choose.
 
 Now we add a new script to package.json so we can run Prettier:
 
 `package.json`
+
 ```
 ...
   "scripts: {
@@ -114,12 +118,15 @@ Now we add a new script to package.json so we can run Prettier:
 ```
 
 You can now run
+
 ```
 yarn prettier
 ```
+
 to automatically format, fix and save all files in your project you haven't ignored. By default my formatter updated about 5 files. You can see them in your list of changed files in the source control tab on the left of VS Code.
 
 ## Git Hooks
+
 One more section on configuration before we start getting into component development. Remember you're going to want this project to be as rock solid as possible if you're going to be building on it in the long term, particularly with a team of other developers. It's worth the time to get it right at the start.
 
 We are going to implement a tool called [Husky](https://typicode.github.io/husky/#/)
@@ -128,7 +135,7 @@ Husky is a tool for running scripts at different stages of the git process, for 
 
 ## Commitlint
 
-Lastly we are going to add one more tool. We have been following a standard convention for all our commit messages so far, let's ensure that everyone on the team is following them as well (including ourselves!). 
+Lastly we are going to add one more tool. We have been following a standard convention for all our commit messages so far, let's ensure that everyone on the team is following them as well (including ourselves!).
 
 To configure it we will be using a set of standard defaults, but I like to include that list explicitly in a `commitlint.config.js` file since I sometimes forget what prefixes are available:
 
@@ -184,3 +191,28 @@ module.exports = {
 	},
 };
 ```
+
+## VS Code Configuration
+
+Now that we have implemented ESLint and Prettier we can take advantage of some convenient VS Code functionality to have them be run automatically.
+
+The reason we want to place them in a folder for the project is that we can set specific settings that only apply to this project, and we can share them with the rest of our team by including them in the code repository.
+
+Within `settings.json` we will add the following values:
+
+`.vscode/settings.json`
+
+```
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true,
+    "source.organizeImports": true
+  }
+}
+```
+
+The above will tell VS Code to use your Prettier extension as the default formatter (you can override manually if you wish with another one) and to automatically format your files and organize your import statements every time you save.
+
+Very handy stuff and just another thing you no longer need to think about so you can focus on the important things like solving business problems.
