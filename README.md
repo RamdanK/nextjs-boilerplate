@@ -82,3 +82,39 @@ We are just going to add a little bit of extra configuration and make it a bit s
 In the above small code example we have added a few additional defaults, we have said that React will always be defined even if we don't specifically import it, and I have added a personal custom rule that I like which allows you to prefix variables with an underscore _ if you have declared them but not used them in the code.
 
 I find that scenario comes up often when you are working on a feature and want to prepare variables for use later, but have not yet reached the point of implementing them.
+## Prettier
+Prettier will take care of automatically formatting our files for us.
+
+I also recommend you get the Prettier [VS Code extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) so that VS Code can handle the formatting of the files for you and you don't need to rely on the command line tool. Having it installed and configured in your project means that VSCode will use your project's settings, so it's still necessary to add it here.
+
+We'll create two files in the root:
+
+`.prettierrc`
+
+```
+{
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "semi": true,
+  "singleQuote": true
+}
+```
+
+In that file I've placed a list of directories that I don't want Prettier to waste any resources working on. You can also use patterns like *.html to ignore groups of types of files if you choose.
+
+Now we add a new script to package.json so we can run Prettier:
+
+`package.json`
+```
+...
+  "scripts: {
+    ...
+    "prettier": "prettier --write ."
+  }
+```
+
+You can now run
+```
+yarn prettier
+```
+to automatically format, fix and save all files in your project you haven't ignored. By default my formatter updated about 5 files. You can see them in your list of changed files in the source control tab on the left of VS Code.
